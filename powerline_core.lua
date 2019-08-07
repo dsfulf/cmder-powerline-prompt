@@ -203,7 +203,8 @@ end
 -- Closes the prompts with a new line and the lamb symbol
 ---
 function closePrompt()
-	clink.prompt.value = clink.prompt.value..newLineSymbol..plc_prompt_lambSymbol.." "
+	clink.prompt.value = addTextWithColor(clink.prompt.value..newLineSymbol, plc_prompt_lambSymbol.." ", ansiFgClrYellow, ansiBgClrBlack)
+	-- clink.prompt.value = clink.prompt.value..newLineSymbol..plc_prompt_lambSymbol.." "
 end
 
 ---
