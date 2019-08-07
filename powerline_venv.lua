@@ -17,12 +17,21 @@ function get_virtual_env(env_var)
     return false
 end
 
-local function append_prompt(env)
-    local env = get_virtual_env(env)
+local function append_prompt(env_var)
+    if env_var == "VIRTUAL_ENV" then
+        local env_path = clink.get_env(env_var)
+        if env_path then
+            local i = clink.prompt.value:find(newLineSymbol)
+            clink.prompt.value = clink.prompt.value:sub(0, i)
+        end
+    end
 
+    local env = get_virtual_env(env_var)
     if env then
-        env = addTextWithColor("", env.." ", ansiBgClrYellow, ansiBgClrBlack)
-        clink.prompt.value = string.gsub(clink.prompt.value, plc_prompt_lambSymbol, env..plc_prompt_lambSymbol)
+        newPrompt = addTextWithColor("", env.." "..plc_prompt_lambSymbol.." ", ansiFgClrYellow, ansiBgClrBlack)
+        -- clink.prompt.value = string.gsub(clink.prompt.value, plc_prompt_lambSymbol, newPrompt)
+        clink.prompt.value = clink.prompt.value..newPrompt
+
     end
 end
 
@@ -34,5 +43,5 @@ local function get_venv_env()
 	append_prompt("VIRTUAL_ENV")
 end
 
--- clink.prompt.register_filter(get_venv_env, 101)
+clink.prompt.register_filter(get_venv_env, 101)
 -- clink.prompt.register_filter(get_conda_env, 101)

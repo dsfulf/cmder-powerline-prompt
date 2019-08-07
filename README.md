@@ -9,9 +9,14 @@ The prompt has multiple segments:
 - npm: in teal. If it detects an npm package, it displays the package name and version number.  
 - Git: in green or yellow. If it detects a Git repo, it displays the branch name. A green color is used if no changes are detected. A yellow color is used if changes are found.  
 
-In the screenshot, [Fira Code](https://github.com/tonsky/FiraCode) font is used.  
+In the screenshot, [Anonymice Powerline](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/AnonymousPro) font is used.  
 
 The look is inspired by [Powerline for Vim](https://github.com/powerline/powerline), and [Zsh's theme agnoster](https://github.com/agnoster/agnoster-zsh-theme).
+
+# Fork Notes
+This fork contains some bug fixes to the [original reposiory](https://github.com/AmrEldib/cmder-powerline-prompt) as it appears that author is not responding to any discussion items.
+
+In particular, the pointers to git branch and npm characters have been corrected, and the code for command line prompt has been corrected post the Python virtual environment name prior to the lambda.
 
 # Requirements
 
