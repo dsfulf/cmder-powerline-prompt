@@ -9,7 +9,7 @@ The prompt has multiple segments:
 - npm: in teal. If it detects an npm package, it displays the package name and version number.  
 - Git: in green or yellow. If it detects a Git repo, it displays the branch name. A green color is used if no changes are detected. A yellow color is used if changes are found.  
 
-In the screenshot, [Anonymice Powerline](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/AnonymousPro) font is used.  
+In the screenshot, [AnonymousPro](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/AnonymousPro) font is used.  
 
 The look is inspired by [Powerline for Vim](https://github.com/powerline/powerline), and [Zsh's theme agnoster](https://github.com/agnoster/agnoster-zsh-theme).
 
@@ -20,7 +20,8 @@ In particular, the pointers to git branch and npm characters have been corrected
 
 # Requirements
 
-Download the [AnonymousPro font](https://github.com/powerline/fonts/tree/master/AnonymousPro)  
+Install the included the AnonymousPro font.
+
 You'll be able to use any font in Cmder, but this font contains the symbols included in the prompt.
 
 ## Font
