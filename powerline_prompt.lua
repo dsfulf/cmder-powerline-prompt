@@ -41,6 +41,10 @@ local segment = {
     fillColor = colorBlue
 }
 
+local function escape_magic(s)
+    return (s:gsub('[%^%$%(%)%%%.%[%]%*%+%-%?]','%%%1'))
+end
+
 ---
 -- Sets the properties of the Segment object, and prepares for a segment to be added
 ---
@@ -48,7 +52,7 @@ local git_root_dir = nil
 local function init()
     -- fullpath
     cwd = clink.get_cwd()
-    local home_env = clink.get_env(plc_prompt_homeSymbolEnvironment):gsub('[%^%$%(%)%%%.%[%]%*%+%-%?]','%%%1')
+    local home_env = escape_magic(clink.get_env(plc_prompt_homeSymbolEnvironment))
 
     -- show just current folder
     if plc_prompt_type == promptTypeFolder then
@@ -61,7 +65,7 @@ local function init()
         local git_dir = get_git_dir()
         if git_dir and git_root_dir == nil then
             -- get the root of the git directory and save it
-            git_root_dir = git_dir:gsub("/.git", "")
+            git_root_dir = escape_magic(git_dir:gsub("/.git", ""))
         end
         if plc_prompt_useHomeSymbol and string.find(cwd, home_env) and git_dir == nil then
             -- in both smart and full if we are in home, behave like a proper command line
@@ -74,8 +78,8 @@ local function init()
                     -- replaces all special characters in cwd with "" and then replaces the cwd up to git_root_dir with ""
                     -- Ex: C:\Users\username\cmder-powerline-prompt\innerdir -> cmder-powerline-prompt\innerdir
                     -- local appended_dir = cwd:gsub("[%(%)%.%%%+%-%*%?%[%^%&]",""):gsub("(.*)("..git_root_dir..")", "")
-                    -- FIX: escape all special characters with "%"
-                    local appended_dir = cwd:gsub('[%^%$%(%)%%%.%[%]%*%+%-%?]','%%%1'):gsub("(.*)("..git_root_dir..")", "")
+                    -- FIX: Unnecessary once special characters are escaped within search patterns
+                    local appended_dir = cwd:gsub("(.*)("..git_root_dir..")", "")
                     cwd = get_folder_name(git_root_dir)..appended_dir
                     if plc_prompt_gitSymbol then
                         cwd = plc_prompt_gitSymbol.." "..cwd
