@@ -48,10 +48,11 @@ local git_root_dir = nil
 local function init()
     -- fullpath
     cwd = clink.get_cwd()
+    local home_env = clink.get_env(plc_prompt_homeSymbolEnvironment):gsub('[%^%$%(%)%%%.%[%]%*%+%-%?]','%%%1')
 
     -- show just current folder
     if plc_prompt_type == promptTypeFolder then
-		cwd =  get_folder_name(cwd)
+        cwd =  get_folder_name(cwd)
     else
     -- show 'smart' folder name
     -- This will show the full folder path unless a Git repo is active in the folder
@@ -62,9 +63,9 @@ local function init()
             -- get the root of the git directory and save it
             git_root_dir = git_dir:gsub("/.git", "")
         end
-        if plc_prompt_useHomeSymbol and string.find(cwd, clink.get_env(plc_prompt_homeSymbolEnvironment)) and git_dir ==nil then
+        if plc_prompt_useHomeSymbol and string.find(cwd, home_env) and git_dir == nil then
             -- in both smart and full if we are in home, behave like a proper command line
-            cwd = string.gsub(cwd, clink.get_env(plc_prompt_homeSymbolEnvironment), plc_prompt_homeSymbol)
+            cwd = cwd:gsub(home_env, plc_prompt_homeSymbol)
         else
             -- either not in home or home not supported then check the smart path
             if plc_prompt_type == promptTypeSmart then
@@ -73,7 +74,8 @@ local function init()
                     -- replaces all special characters in cwd with "" and then replaces the cwd up to git_root_dir with ""
                     -- Ex: C:\Users\username\cmder-powerline-prompt\innerdir -> cmder-powerline-prompt\innerdir
                     -- local appended_dir = cwd:gsub("[%(%)%.%%%+%-%*%?%[%^%&]",""):gsub("(.*)("..git_root_dir..")", "")
-					local appended_dir = cwd:gsub("[%(%)%%%+%-%*%?%[%^%&]",""):gsub("(.*)("..git_root_dir..")", "")
+                    -- FIX: escape all special characters with "%"
+                    local appended_dir = cwd:gsub('[%^%$%(%)%%%.%[%]%*%+%-%?]','%%%1'):gsub("(.*)("..git_root_dir..")", "")
                     cwd = get_folder_name(git_root_dir)..appended_dir
                     if plc_prompt_gitSymbol then
                         cwd = plc_prompt_gitSymbol.." "..cwd
