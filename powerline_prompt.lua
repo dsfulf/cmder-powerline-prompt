@@ -11,7 +11,7 @@ local promptTypeSmart = "smart"
  -- default is promptTypeFull
  -- Set default value if no value is already set
 if not plc_prompt_type then
-    plc_prompt_type = promptTypeFull
+    plc_prompt_type = promptTypeSmart
 end
 if not plc_prompt_useHomeSymbol then
 	plc_prompt_useHomeSymbol = true
@@ -42,7 +42,7 @@ local segment = {
 }
 
 local function escape_magic(s)
-    return (s:gsub('[%^%$%(%)%%%.%[%]%*%+%-%?]','%%%1'))
+    return (s:gsub("[%^%$%(%)%%%[%]%*%+%-%?]", "%%%1"))
 end
 
 ---

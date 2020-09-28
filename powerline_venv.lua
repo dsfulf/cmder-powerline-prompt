@@ -44,4 +44,4 @@ local function get_venv_env()
 end
 
 clink.prompt.register_filter(get_venv_env, 101)
--- clink.prompt.register_filter(get_conda_env, 101)
+clink.prompt.register_filter(get_conda_env, 101)
