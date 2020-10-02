@@ -42,7 +42,7 @@ local segment = {
 }
 
 local function escape_magic(s)
-    return (s:gsub("[%^%$%(%)%%%[%]%*%+%-%?]", "%%%1"))
+    return (s:gsub("[%^%$%(%)%.%%%[%]%*%+%-%?]", "%%%1"))
 end
 
 ---
@@ -65,7 +65,8 @@ local function init()
         local git_dir = get_git_dir()
         if git_dir and git_root_dir == nil then
             -- get the root of the git directory and save it
-            git_root_dir = escape_magic(git_dir:gsub("/.git", ""))
+            git_root_dir_display = git_dir:gsub("/.git", "")
+            git_root_dir = escape_magic(git_root_dir_display)
         end
         if plc_prompt_useHomeSymbol and string.find(cwd, home_env) and git_dir == nil then
             -- in both smart and full if we are in home, behave like a proper command line
@@ -80,7 +81,7 @@ local function init()
                     -- local appended_dir = cwd:gsub("[%(%)%.%%%+%-%*%?%[%^%&]",""):gsub("(.*)("..git_root_dir..")", "")
                     -- FIX: Unnecessary once special characters are escaped within search patterns
                     local appended_dir = cwd:gsub("(.*)("..git_root_dir..")", "")
-                    cwd = get_folder_name(git_root_dir)..appended_dir
+                    cwd = get_folder_name(git_root_dir_display)..appended_dir
                     if plc_prompt_gitSymbol then
                         cwd = plc_prompt_gitSymbol.." "..cwd
                     end
